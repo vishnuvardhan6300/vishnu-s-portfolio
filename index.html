@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vishnu Vardhan — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=DM+Mono:wght@300;400&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --border: rgba(255,255,255,0.07);
+    --border-hi: rgba(255,255,255,0.14);
+    --text: #f0efe8;
+    --muted: #888787;
+    --accent: #c8f564;
+    --accent2: #5d9fff;
+    --accent3: #ff7f5c;
+    --card: #14141c;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(14px);
+    border-bottom: 0.5px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.1rem; letter-spacing: -0.02em;
+    color: var(--accent);
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-family: 'DM Mono', monospace; font-size: 0.75rem; letter-spacing: 0.08em;
+    color: var(--muted); text-decoration: none; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* ── SECTIONS ── */
+  section { padding: 7rem 0; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 3rem; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh; display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding-top: 5rem;
+  }
+  .hero-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'DM Mono', monospace; font-size: 0.72rem;
+    color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    border: 0.5px solid rgba(200,245,100,0.25);
+    padding: 0.35rem 0.75rem; border-radius: 100px;
+  }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  h1 {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(3rem, 5vw, 5rem); line-height: 1.0;
+    letter-spacing: -0.04em; color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+  h1 em { font-style: normal; color: var(--accent); }
+
+  .hero-desc {
+    font-size: 1.05rem; color: var(--muted); max-width: 400px;
+    line-height: 1.75; margin-bottom: 2.5rem;
+  }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 0.75rem 1.75rem; border-radius: 100px;
+    font-family: 'DM Mono', monospace; font-size: 0.78rem; letter-spacing: 0.06em;
+    text-transform: uppercase; text-decoration: none; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-primary { background: var(--accent); color: #0a0a0f; border: none; font-weight: 500; }
+  .btn-primary:hover { background: #d4f77a; transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--text); border: 0.5px solid var(--border-hi); }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.04); }
+
+  .hero-right { position: relative; }
+  .hero-card {
+    background: var(--card); border: 0.5px solid var(--border-hi);
+    border-radius: 20px; padding: 2rem;
+    display: flex; flex-direction: column; gap: 1.5rem;
+  }
+  .hero-card-label {
+    font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted);
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .skill-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    padding: 0.3rem 0.85rem; border-radius: 100px; font-size: 0.78rem;
+    font-family: 'DM Mono', monospace;
+    border: 0.5px solid var(--border-hi); color: var(--muted);
+    transition: all 0.2s;
+  }
+  .chip:hover { border-color: var(--accent); color: var(--accent); }
+  .chip.accent { border-color: rgba(200,245,100,0.4); color: var(--accent); }
+  .chip.blue { border-color: rgba(93,159,255,0.4); color: var(--accent2); }
+  .chip.coral { border-color: rgba(255,127,92,0.4); color: var(--accent3); }
+
+  .stat-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+  .stat { text-align: center; }
+  .stat-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.6rem; color: var(--text); }
+  .stat-label { font-size: 0.72rem; color: var(--muted); font-family: 'DM Mono', monospace; letter-spacing: 0.06em; }
+
+  /* ── DECORATIVE BG ── */
+  .bg-glow {
+    position: absolute; width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,245,100,0.04) 0%, transparent 70%);
+    top: -100px; right: -100px; pointer-events: none;
+  }
+
+  /* ── SECTION HEADINGS ── */
+  .section-label {
+    font-family: 'DM Mono', monospace; font-size: 0.72rem;
+    color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  h2 {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(2rem, 3.5vw, 3rem); letter-spacing: -0.03em;
+    line-height: 1.1; margin-bottom: 3rem;
+  }
+  .divider { width: 40px; height: 2px; background: var(--accent); margin-bottom: 1rem; }
+
+  /* ── PROJECTS ── */
+  .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .project-card {
+    background: var(--card); border: 0.5px solid var(--border);
+    border-radius: 16px; padding: 2rem;
+    transition: border-color 0.25s, transform 0.25s;
+    position: relative; overflow: hidden;
+  }
+  .project-card:hover { border-color: var(--border-hi); transform: translateY(-3px); }
+  .project-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(200,245,100,0.03) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .project-num {
+    font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted);
+    margin-bottom: 1rem; letter-spacing: 0.1em;
+  }
+  .project-card h3 {
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.15rem;
+    color: var(--text); margin-bottom: 0.75rem; line-height: 1.25;
+  }
+  .project-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.25rem; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.06em;
+    padding: 0.2rem 0.6rem; border-radius: 4px;
+    background: rgba(255,255,255,0.05); color: var(--muted);
+  }
+
+  /* ── EDUCATION ── */
+  .edu-list { display: flex; flex-direction: column; gap: 1.25rem; }
+  .edu-item {
+    display: grid; grid-template-columns: 1fr auto;
+    align-items: start; gap: 1rem;
+    padding: 1.5rem; background: var(--card);
+    border: 0.5px solid var(--border); border-radius: 12px;
+    transition: border-color 0.2s;
+  }
+  .edu-item:hover { border-color: var(--border-hi); }
+  .edu-deg { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; margin-bottom: 0.25rem; }
+  .edu-inst { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.35rem; }
+  .edu-year { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); }
+  .edu-grade {
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.25rem;
+    color: var(--accent); white-space: nowrap;
+  }
+
+  /* ── CERTS ── */
+  .certs-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+  .cert-card {
+    padding: 1.25rem; background: var(--card);
+    border: 0.5px solid var(--border); border-radius: 12px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .cert-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .cert-icon { font-size: 1.4rem; margin-bottom: 0.75rem; }
+  .cert-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem; line-height: 1.3; margin-bottom: 0.35rem; }
+  .cert-by { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); letter-spacing: 0.06em; }
+
+  /* ── CONTACT ── */
+  #contact { border-top: 0.5px solid var(--border); }
+  .contact-inner {
+    background: var(--card); border: 0.5px solid var(--border-hi);
+    border-radius: 24px; padding: 4rem;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .contact-inner::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(200,245,100,0.06) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .contact-inner h2 { margin-bottom: 1rem; }
+  .contact-inner p { color: var(--muted); margin-bottom: 2.5rem; font-size: 1rem; }
+  .contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .contact-link {
+    display: flex; align-items: center; gap: 8px;
+    padding: 0.7rem 1.5rem; border: 0.5px solid var(--border-hi);
+    border-radius: 100px; color: var(--text); text-decoration: none;
+    font-family: 'DM Mono', monospace; font-size: 0.78rem;
+    transition: all 0.2s;
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center; padding: 2rem;
+    font-family: 'DM Mono', monospace; font-size: 0.7rem;
+    color: var(--muted); border-top: 0.5px solid var(--border);
+    letter-spacing: 0.06em;
+  }
+
+  /* ── SCROLL ANIMATION ── */
+  .reveal {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .container { padding: 0 1.5rem; }
+    .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .certs-grid { grid-template-columns: 1fr 1fr; }
+    .contact-inner { padding: 2.5rem 1.5rem; }
+    h1 { font-size: 2.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">VV</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="bg-glow"></div>
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-tag">Available for opportunities</div>
+        <h1>Vishnu<br><em>Vardhan.</em></h1>
+        <p class="hero-desc">
+          CS undergraduate specialising in AI & Data Science. I build ML models, 
+          craft data-driven solutions, and ship software that matters.
+        </p>
+        <div class="hero-cta">
+          <a href="#projects" class="btn btn-primary">View Projects ↓</a>
+          <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+        </div>
+      </div>
+
+      <div class="hero-right reveal">
+        <div class="hero-card">
+          <div>
+            <div class="hero-card-label">Core Stack</div>
+            <div style="margin-top:0.75rem;" class="skill-chips">
+              <span class="chip accent">Python</span>
+              <span class="chip accent">XGBoost</span>
+              <span class="chip blue">SQL</span>
+              <span class="chip blue">Scikit-learn</span>
+              <span class="chip coral">Java</span>
+              <span class="chip coral">Android</span>
+              <span class="chip">HTML/CSS</span>
+              <span class="chip">MS Excel</span>
+            </div>
+          </div>
+          <div style="border-top: 0.5px solid var(--border); padding-top: 1.5rem;">
+            <div class="stat-row">
+              <div class="stat">
+                <div class="stat-num">7.8</div>
+                <div class="stat-label">CGPA</div>
+              </div>
+              <div class="stat">
+                <div class="stat-num">5+</div>
+                <div class="stat-label">Certifications</div>
+              </div>
+              <div class="stat">
+                <div class="stat-num">3</div>
+                <div class="stat-label">Projects</div>
+              </div>
+            </div>
+          </div>
+          <div style="border-top: 0.5px solid var(--border); padding-top: 1.25rem; display:flex; gap:6px; align-items:center;">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block;animation:pulse 2s infinite;"></span>
+            <span style="font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--muted);">Andhra Pradesh, India</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <p class="section-label">02 — Work</p>
+    <div class="divider"></div>
+    <h2>Projects</h2>
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <div class="project-num">01 / Machine Learning</div>
+        <h3>UPI Fraud Detection using XGBoost</h3>
+        <p>Built a supervised ML pipeline to identify fraudulent UPI transactions on imbalanced datasets. Applied feature engineering and evaluated with precision, recall, and F1-score — demonstrating real-world AI application in financial security.</p>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">XGBoost</span>
+          <span class="tag">Scikit-learn</span>
+          <span class="tag">Imbalanced Data</span>
+          <span class="tag">Feature Engineering</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-num">02 / Mobile</div>
+        <h3>Portfolio App — Android Native</h3>
+        <p>Designed and developed a native Android portfolio application with polished UI/UX flows, smooth navigation, and structured data presentation — showcasing Android certification skills in a real deliverable.</p>
+        <div class="project-tags">
+          <span class="tag">Android</span>
+          <span class="tag">Java</span>
+          <span class="tag">UI/UX</span>
+          <span class="tag">Navigation</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-num">03 / Web</div>
+        <h3>Portfolio Website — JAM Stack</h3>
+        <p>Developed a fully responsive web portfolio using HTML, CSS, and JAM Stack architecture. Focused on cross-device compatibility, clean information hierarchy, and performance-first design principles.</p>
+        <div class="project-tags">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">JAM Stack</span>
+          <span class="tag">Responsive</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal" style="border: 0.5px dashed var(--border-hi); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:0.75rem; min-height: 200px;">
+        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:2rem;color:var(--border-hi);">+</div>
+        <p style="color:var(--muted);font-size:0.85rem;text-align:center;margin:0;">More projects in progress<br>Check back soon</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container">
+    <p class="section-label">03 — Background</p>
+    <div class="divider"></div>
+    <h2>Education</h2>
+    <div class="edu-list">
+
+      <div class="edu-item reveal">
+        <div>
+          <div class="edu-deg">B.Tech — CSE (AI & Data Science)</div>
+          <div class="edu-inst">Siddartha Institute of Science and Technology, Puttur</div>
+          <div class="edu-year">2022 – 2026</div>
+        </div>
+        <div class="edu-grade">7.8 / 10</div>
+      </div>
+
+      <div class="edu-item reveal">
+        <div>
+          <div class="edu-deg">Intermediate — MPC</div>
+          <div class="edu-inst">Priyadarshini Junior College, Atmakur</div>
+          <div class="edu-year">2020 – 2022</div>
+        </div>
+        <div class="edu-grade">85%</div>
+      </div>
+
+      <div class="edu-item reveal">
+        <div>
+          <div class="edu-deg">SSC — Class 10</div>
+          <div class="edu-inst">Pragathi English Medium High School</div>
+          <div class="edu-year">2020</div>
+        </div>
+        <div class="edu-grade">9.5 GPA</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="container">
+    <p class="section-label">04 — Credentials</p>
+    <div class="divider"></div>
+    <h2>Certifications</h2>
+    <div class="certs-grid">
+
+      <div class="cert-card reveal">
+        <div class="cert-icon">🏦</div>
+        <div class="cert-name">Walmart Advanced Software Engineering Job Simulation</div>
+        <div class="cert-by">Walmart · Feb 2026</div>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-icon">📊</div>
+        <div class="cert-name">Deloitte Data Analytics Job Simulation</div>
+        <div class="cert-by">Deloitte · Feb 2026</div>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-icon">📱</div>
+        <div class="cert-name">App Design for Android</div>
+        <div class="cert-by">Certified</div>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-icon">☕</div>
+        <div class="cert-name">Java Programming Internship</div>
+        <div class="cert-by">Completed</div>
+      </div>
+
+      <div class="cert-card reveal">
+        <div class="cert-icon">🎬</div>
+        <div class="cert-name">2D & 3D Animation</div>
+        <div class="cert-by">SFX Institute</div>
+      </div>
+
+      <div class="cert-card reveal" style="border-style:dashed; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:0.5rem;">
+        <div style="font-size:1.25rem; color: var(--border-hi);">⬡</div>
+        <div class="cert-by" style="text-align:center;">24-hr Hackathon<br>Participant</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-inner reveal">
+      <p class="section-label" style="justify-content:center;display:flex;margin-bottom:1rem;">05 — Say Hello</p>
+      <h2>Let's build<br><em style="color:var(--accent);">something</em> together.</h2>
+      <p>Open to internships, collaborations, and full-time roles.<br>Drop me a line — I respond quickly.</p>
+      <div class="contact-links">
+        <a href="mailto:vishnuvardhan7887@gmail.com" class="contact-link">
+          <span>✉</span> vishnuvardhan7887@gmail.com
+        </a>
+        <a href="tel:+916300896005" class="contact-link">
+          <span>☎</span> +91 6300896005
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  &copy; 2026 Vishnu Vardhan Amancharla · Andhra Pradesh, India
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        e.target.style.transitionDelay = (i * 0.08) + 's';
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
